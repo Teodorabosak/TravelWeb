@@ -13,9 +13,11 @@ namespace TravelWeb.Controllers
             _logger = logger;
         }
 
+        //Action methods
         public IActionResult Index()
         {
             return View();
+            //vraca view Index-na osn naziva metode, ako nismo naveli u zagradi
         }
 
         public IActionResult Privacy()

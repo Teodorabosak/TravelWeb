@@ -1,8 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using TravelWeb.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container, nasa aplikacija koristi kontrolere
 // Dependency injection ide ovde
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ApplicationDbContext>(options=>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 
@@ -24,7 +30,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-// kakva je ruta, ako nije nista definisano onda je ovo ruta, ? znaci da moze  biti definisana i ne mora
+// kakva je ruta, ako nije action definisano onda je ovo ruta, ? znaci da moze  biti definisana i ne mora
 
 app.Run();
 //pokrece aplikaciju
