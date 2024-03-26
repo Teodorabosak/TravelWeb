@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelWeb.Data;
 
@@ -11,9 +12,11 @@ using TravelWeb.Data;
 namespace TravelWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240326212344_AddDestination")]
+    partial class AddDestination
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,10 +36,6 @@ namespace TravelWeb.Migrations
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -51,28 +50,24 @@ namespace TravelWeb.Migrations
                         {
                             Id = 1,
                             DisplayOrder = 1,
-                            ImageUrl = "",
                             Name = "Letovanje"
                         },
                         new
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            ImageUrl = "",
                             Name = "Gradovi Europe"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
-                            ImageUrl = "",
                             Name = "Putovanja za mlade"
                         },
                         new
                         {
                             Id = 4,
                             DisplayOrder = 4,
-                            ImageUrl = "",
                             Name = "Egzotična putovanja"
                         });
                 });

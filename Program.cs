@@ -29,7 +29,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 // kakva je ruta, ako nije action definisano onda je ovo ruta, ? znaci da moze  biti definisana i ne mora
 
 app.Run();

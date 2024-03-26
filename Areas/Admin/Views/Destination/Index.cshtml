@@ -1,0 +1,61 @@
+﻿@model List<Destination>
+
+ <div class="container">
+     <div class="row pt-4 pb-3">
+         <div class="col-6">
+             <h2 class="text-primary">
+                 Kategorija putovanja
+             </h2>
+         </div>
+        <div class="col-6 text-end" >
+            <a asp-controller="Destination" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"> Dodaj </i>
+            </a>
+         </div>
+     </div>
+
+ </div>
+<table class="table table-bordered table-striped">
+    <thed>
+
+    </thed>
+    <tr>
+        <th>Naziv putovanja</th>
+        <th>Opis putovanja</th>
+        <th>Smestaj</th>
+        <th>Cena</th>
+        <th>Polazak</th>
+        <th>Povratak</th>
+        <th>Kategorija</th>
+        <th></th>
+    </tr>
+    <tbody>
+        @foreach(var obj in Model)
+        {
+        <tr>
+            <td>@obj.Name</td>
+            <td>@obj.Description</td>
+            <td>@obj.Hotel</td>
+            <td>@obj.Price</td>
+            <td>@obj.Date1</td>
+            <td>@obj.Date2</td>
+            <td>@obj.CategoryId</td>
+           
+
+            <td>
+                <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Destination" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                            <i class="bi bi-pencil-square"></i> Izmeni
+                        </a>
+                        <a asp-controller="Destination" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-light border mx-2">
+                            <i class="bi bi-trash-fill"></i> Obrisi
+                        </a>
+
+                </div>
+            </td>
+        </tr>
+
+        }
+    </tbody>
+</table>
+
