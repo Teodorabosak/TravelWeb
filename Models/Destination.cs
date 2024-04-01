@@ -37,7 +37,7 @@ namespace TravelWeb.Models
         [ValidateNever]
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
-
+        [ValidateNever]
         [Display(Name = "Slika")]
         public string ImageUrl { get; set; }
 

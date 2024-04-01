@@ -12,9 +12,9 @@ namespace TravelWeb.Repository
             Category = new CategoryRepository(_context);
             Destination = new DestinationRepository(_context);
         }
-        public ICategoryRepository Category {get; private set;}
+        public ICategoryRepository Category {get; set;}
 
-        public IDestinationRepository Destination { get; private set; }
+        public IDestinationRepository Destination { get; set; }
 
         public void Save()
         {

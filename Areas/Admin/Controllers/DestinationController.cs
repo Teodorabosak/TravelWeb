@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
 using TravelWeb.Models;
-using TravelWeb.Repository;
+using TravelWeb.Models.ViewModels;
 using TravelWeb.Repository.IRepository;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TravelWeb.Areas.Admin.Controllers
 {
@@ -19,38 +21,50 @@ namespace TravelWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Destination> destination = _unit.Destination.GetAll().ToList();
-
-            
             return View(destination);
         }
         public IActionResult Create()
         {
-            IEnumerable<SelectListItem> CategoryList = _unit.Category
+
+                DestinationVM destinationVM = new()
+            {
+                CategoryList=_unit.Category
                .GetAll().Select(u => new SelectListItem
                {
                    Text = u.Name,
                    Value = u.Id.ToString()
 
-               });
-            ViewBag.CategoryList = CategoryList;
-
-            return View();
+               }),
+            
+                Destination = new Destination()
+            };
+            return View(destinationVM);
         }
 
         [HttpPost]
-        public IActionResult Create(Destination obj)
+        public IActionResult Create(DestinationVM destinationVM)
         {
-            if (ModelState.IsValid)
+            
+           if (ModelState.IsValid)
             {
 
-                _unit.Destination.Add(obj);
+                _unit.Destination.Add(destinationVM.Destination);
                 _unit.Save();
 
                 return RedirectToAction("Index");
 
+            } else
+            {
+                destinationVM.CategoryList = _unit.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                   Value = u.Id.ToString()
+
+                });
+
+                return View(destinationVM);
             }
 
-            return View();
         }
 
         public IActionResult Edit(int? id)
