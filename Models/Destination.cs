@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TravelWeb.Models
@@ -31,11 +32,14 @@ namespace TravelWeb.Models
         [Display(Name = "Datum povratka")]
         [Required]
         public DateTime Date2 { get; set; }
-
+       
         public int CategoryId { get; set; }
-        
+        [ValidateNever]
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
+
+        [Display(Name = "Slika")]
+        public string ImageUrl { get; set; }
 
 
 

@@ -5,43 +5,22 @@
 namespace TravelWeb.Migrations
 {
     /// <inheritdoc />
-    public partial class ImageURL : Migration
+    public partial class ImageUrl : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
                 name: "ImageUrl",
-                table: "Categories",
+                table: "Destinations",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
 
             migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "ImageUrl",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
+                table: "Destinations",
                 keyColumn: "Id",
                 keyValue: 2,
-                column: "ImageUrl",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "ImageUrl",
-                value: "");
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 4,
                 column: "ImageUrl",
                 value: "");
         }
@@ -51,7 +30,7 @@ namespace TravelWeb.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "ImageUrl",
-                table: "Categories");
+                table: "Destinations");
         }
     }
 }

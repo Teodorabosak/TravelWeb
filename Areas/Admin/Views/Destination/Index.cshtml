@@ -2,16 +2,16 @@
 
  <div class="container">
      <div class="row pt-4 pb-3">
-         <div class="col-6">
+         <div class="col-10">
              <h2 class="text-primary">
-                 Kategorija putovanja
+                 Putovanja koja imamo u ponudi
              </h2>
+            <h3>Da li ste spremni za nezaboravno putovanje?</h3>
+            
+            <p> Bez obzira da li ste avanturista u duši, ljubitelj kulture ili tražite mir u prirodi, mi smo tu da vam pružimo nezaboravno iskustvo. <br />
+                Naša misija je jednostavna - stvoriti savršeno putovanje baš za vas.</p>
          </div>
-        <div class="col-6 text-end" >
-            <a asp-controller="Destination" asp-action="Create" class="btn btn-primary">
-                <i class="bi bi-plus-circle"> Dodaj </i>
-            </a>
-         </div>
+        
      </div>
 
  </div>
@@ -21,25 +21,29 @@
     </thed>
     <tr>
         <th>Naziv putovanja</th>
-        <th>Opis putovanja</th>
-        <th>Smestaj</th>
+        @* <th>Opis putovanja</th> *@
+        @* <th>Smestaj</th> *@
         <th>Cena</th>
         <th>Polazak</th>
         <th>Povratak</th>
-        <th>Kategorija</th>
-        <th></th>
+        @* <th>Kategorija</th> *@
+        <th>
+            <a asp-controller="Destination" asp-action="Create" class="btn btn-primary ">
+                <i class="bi bi-plus-circle"> Unesi novo putovanje </i>
+            </a>
+        </th>
     </tr>
     <tbody>
         @foreach(var obj in Model)
         {
         <tr>
             <td>@obj.Name</td>
-            <td>@obj.Description</td>
-            <td>@obj.Hotel</td>
+            @* <td>@obj.Description</td>
+            <td>@obj.Hotel</td> *@
             <td>@obj.Price</td>
             <td>@obj.Date1</td>
             <td>@obj.Date2</td>
-            <td>@obj.CategoryId</td>
+           @*  <td>@obj.CategoryId</td> *@
            
 
             <td>

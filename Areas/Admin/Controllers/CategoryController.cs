@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelWeb.Data;
 using TravelWeb.Models;
+using TravelWeb.Repository;
+using TravelWeb.Repository.IRepository;
 
 namespace TravelWeb.Areas.Admin.Controllers
 {
@@ -8,15 +10,15 @@ namespace TravelWeb.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
 
-        private readonly ApplicationDbContext _context;
-        public CategoryController(ApplicationDbContext context)
+        private readonly ICategoryRepository _categoryRepo;
+        public CategoryController(ICategoryRepository context)
         {
-            _context = context;
+            _categoryRepo = context;
         }
 
         public IActionResult Index()
         {
-            List<Category> category = _context.Categories.ToList();
+            List<Category> category = _categoryRepo.GetAll().ToList();
             return View(category);
         }
         public IActionResult Create()
@@ -30,8 +32,8 @@ namespace TravelWeb.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                _context.Categories.Add(obj);
-                _context.SaveChanges();
+                _categoryRepo.Add(obj);
+                _categoryRepo.Save();
 
                 return RedirectToAction("Index");
 
@@ -47,7 +49,7 @@ namespace TravelWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Category? category = _context.Categories.Find(id);
+            Category? category = _categoryRepo.Get(u=>u.Id==id);
 
             if (category == null)
             {
@@ -62,8 +64,8 @@ namespace TravelWeb.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                _context.Categories.Update(obj);
-                _context.SaveChanges();
+                _categoryRepo.Update(obj);
+                _categoryRepo.Save();
 
                 return RedirectToAction("Index");
 
@@ -79,7 +81,7 @@ namespace TravelWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Category? category = _context.Categories.Find(id);
+            Category? category = _categoryRepo.Get(u => u.Id == id);
 
             if (category == null)
             {
@@ -92,13 +94,13 @@ namespace TravelWeb.Areas.Admin.Controllers
 
         public IActionResult DeletePOST(int? id)
         {
-            Category obj = _context.Categories.Find(id);
+            Category obj = _categoryRepo.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _context.Categories.Remove(obj);
-            _context.SaveChanges();
+            _categoryRepo.Delete(obj);
+            _categoryRepo.Save();
             return RedirectToAction("Index");
 
         }

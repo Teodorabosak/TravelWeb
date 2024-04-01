@@ -12,8 +12,8 @@ using TravelWeb.Data;
 namespace TravelWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240326213535_ImageURL")]
-    partial class ImageURL
+    [Migration("20240401133325_ImageUrl")]
+    partial class ImageUrl
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,10 +36,6 @@ namespace TravelWeb.Migrations
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -54,28 +50,24 @@ namespace TravelWeb.Migrations
                         {
                             Id = 1,
                             DisplayOrder = 1,
-                            ImageUrl = "",
                             Name = "Letovanje"
                         },
                         new
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            ImageUrl = "",
                             Name = "Gradovi Europe"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
-                            ImageUrl = "",
                             Name = "Putovanja za mlade"
                         },
                         new
                         {
                             Id = 4,
                             DisplayOrder = 4,
-                            ImageUrl = "",
                             Name = "Egzotična putovanja"
                         });
                 });
@@ -105,6 +97,10 @@ namespace TravelWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -127,6 +123,7 @@ namespace TravelWeb.Migrations
                             Date2 = new DateTime(2024, 3, 29, 0, 50, 0, 0, DateTimeKind.Unspecified),
                             Description = "Uživajte u čarima termalnih kupki, poput čuvenih Gellért kupki, gde možete opustiti tela u toplim izvorima pod elegantnim mozaicima. Za ljubitelje umetnosti, poseta Muzeju savremene umetnosti ili Mađarskoj nacionalnoj galeriji predstavlja priliku da se upoznate sa bogatom kulturnom baštinom grada.  Gurmani će uživati u mađarskoj kuhinji, probajući čuvene gulaše, paprikaš i slatke poslastice poput krempita. Ne zaboravite posetiti Veliko tržište kako biste istražili lokalne proizvode i suvenire.  Budimpešta takođe nudi dinamičan noćni život, sa širokim spektrom barova, klubova i restorana. Šetnja duž obala Dunava noću pruža romantičnu atmosferu, posebno kada su mostovi osvetljeni.",
                             Hotel = "Sheraton hotel",
+                            ImageUrl = "",
                             Name = "Budimpesta",
                             Price = 120.0
                         });
