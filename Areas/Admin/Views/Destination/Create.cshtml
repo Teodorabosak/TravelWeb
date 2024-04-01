@@ -39,14 +39,14 @@
             <input asp-for="Date2" class="form-control" />
             <span asp-validation-for="Date2" class="text-danger"></span>
             </div>
-            @* <div class="mb-3">
-            <label asp-for="Destination.CategoryId" class="p-1"> Kategorija putovanja </label>
-            <select asp-for="Destination.CategoryId" asp-items="CategoryList" class="form-select">
+            <div class="mb-3">
+            <label asp-for="CategoryId" class="p-1"> Kategorija putovanja </label>
+            <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-select">
                         <option disabled selected>---Izaberi kategoriju---</option>
-                </select>
+            </select>
 
-            <span asp-validation-for="Destination.CategoryId" class="text-primary"></span>
-            </div> *@
+            <span asp-validation-for="CategoryId" class="text-primary"></span>
+            </div>
 
 
              <div class="row">

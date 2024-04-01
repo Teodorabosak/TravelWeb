@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TravelWeb.Models;
+using TravelWeb.Repository;
 using TravelWeb.Repository.IRepository;
 
 namespace TravelWeb.Areas.Admin.Controllers
@@ -8,19 +10,30 @@ namespace TravelWeb.Areas.Admin.Controllers
     public class DestinationController : Controller
     {
 
-        private readonly IDestinationRepository _destinationRepo;
-        public DestinationController(IDestinationRepository context)
+        private readonly IUnit _unit;
+        public DestinationController(IUnit unit)
         {
-            _destinationRepo = context;
+            _unit = unit;
         }
 
         public IActionResult Index()
         {
-            List<Destination> destination = _destinationRepo.GetAll().ToList();
+            List<Destination> destination = _unit.Destination.GetAll().ToList();
+
+            
             return View(destination);
         }
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> CategoryList = _unit.Category
+               .GetAll().Select(u => new SelectListItem
+               {
+                   Text = u.Name,
+                   Value = u.Id.ToString()
+
+               });
+            ViewBag.CategoryList = CategoryList;
+
             return View();
         }
 
@@ -30,8 +43,8 @@ namespace TravelWeb.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                _destinationRepo.Add(obj);
-                _destinationRepo.Save();
+                _unit.Destination.Add(obj);
+                _unit.Save();
 
                 return RedirectToAction("Index");
 
@@ -47,7 +60,7 @@ namespace TravelWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Destination? destination = _destinationRepo.Get(u => u.Id == id);
+            Destination? destination = _unit.Destination.Get(u => u.Id == id);
 
             if (destination == null)
             {
@@ -62,8 +75,8 @@ namespace TravelWeb.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                _destinationRepo.Update(obj);
-                _destinationRepo.Save();
+                _unit.Destination.Update(obj);
+                _unit.Save();
 
                 return RedirectToAction("Index");
 
@@ -79,7 +92,7 @@ namespace TravelWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Destination? destination = _destinationRepo.Get(u => u.Id == id);
+            Destination? destination = _unit.Destination.Get(u => u.Id == id);
 
             if (destination == null)
             {
@@ -92,13 +105,13 @@ namespace TravelWeb.Areas.Admin.Controllers
 
         public IActionResult DeletePOST(int? id)
         {
-            Destination obj = _destinationRepo.Get(u => u.Id == id);
+            Destination obj = _unit.Destination.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _destinationRepo.Delete(obj);
-            _destinationRepo.Save();
+            _unit.Destination.Delete(obj);
+            _unit.Save();
             return RedirectToAction("Index");
 
         }

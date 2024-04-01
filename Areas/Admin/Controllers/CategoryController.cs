@@ -10,15 +10,15 @@ namespace TravelWeb.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
 
-        private readonly ICategoryRepository _categoryRepo;
-        public CategoryController(ICategoryRepository context)
+        private readonly IUnit _unit;
+        public CategoryController(IUnit unit)
         {
-            _categoryRepo = context;
+            _unit = unit;
         }
 
         public IActionResult Index()
         {
-            List<Category> category = _categoryRepo.GetAll().ToList();
+            List<Category> category = _unit.Category.GetAll().ToList();
             return View(category);
         }
         public IActionResult Create()
@@ -32,8 +32,8 @@ namespace TravelWeb.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                _categoryRepo.Add(obj);
-                _categoryRepo.Save();
+                _unit.Category.Add(obj);
+                _unit.Save();
 
                 return RedirectToAction("Index");
 
@@ -49,7 +49,7 @@ namespace TravelWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Category? category = _categoryRepo.Get(u=>u.Id==id);
+            Category? category = _unit.Category.Get(u=>u.Id==id);
 
             if (category == null)
             {
@@ -64,8 +64,8 @@ namespace TravelWeb.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                _categoryRepo.Update(obj);
-                _categoryRepo.Save();
+                _unit.Category.Update(obj);
+                _unit.Save();
 
                 return RedirectToAction("Index");
 
@@ -81,7 +81,7 @@ namespace TravelWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Category? category = _categoryRepo.Get(u => u.Id == id);
+            Category? category = _unit.Category.Get(u => u.Id == id);
 
             if (category == null)
             {
@@ -94,13 +94,13 @@ namespace TravelWeb.Areas.Admin.Controllers
 
         public IActionResult DeletePOST(int? id)
         {
-            Category obj = _categoryRepo.Get(u => u.Id == id);
+            Category obj = _unit.Category.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _categoryRepo.Delete(obj);
-            _categoryRepo.Save();
+            _unit.Category.Delete(obj);
+            _unit.Save();
             return RedirectToAction("Index");
 
         }

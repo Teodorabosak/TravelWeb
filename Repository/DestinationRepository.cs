@@ -8,19 +8,15 @@ namespace TravelWeb.Repository
     public class DestinationRepository : Repository<Destination>, IDestinationRepository
     {
         private ApplicationDbContext _context;
+       
         public DestinationRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
-
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-
+        
         public void Update(Destination destination)
         {
-           _context.Destinations.Update(destination);
+            _context.Destinations.Update(destination);
         }
     }
 }
