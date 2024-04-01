@@ -16,7 +16,22 @@ namespace TravelWeb.Repository
         
         public void Update(Destination destination)
         {
-            _context.Destinations.Update(destination);
+            var objDb = _context.Destinations.FirstOrDefault(u => u.Id == destination.Id);
+            if(objDb != null)
+            {
+                objDb.Name = destination.Name;
+                objDb.Description = destination.Description;
+                objDb.Price = destination.Price;
+                objDb.Date2 = destination.Date2;
+                objDb.Date1 = destination.Date1;
+                objDb.CategoryId = destination.CategoryId;
+                objDb.Hotel = destination.Hotel;
+
+                if(destination.ImageUrl != null)
+                {
+                    objDb.ImageUrl = destination.ImageUrl;
+                }
+            }
         }
     }
 }

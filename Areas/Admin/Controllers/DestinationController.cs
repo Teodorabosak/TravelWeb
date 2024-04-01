@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using TravelWeb.Models;
@@ -13,9 +14,11 @@ namespace TravelWeb.Areas.Admin.Controllers
     {
 
         private readonly IUnit _unit;
-        public DestinationController(IUnit unit)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public DestinationController(IUnit unit, IWebHostEnvironment webHostEnvironment)
         {
             _unit = unit;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -23,7 +26,7 @@ namespace TravelWeb.Areas.Admin.Controllers
             List<Destination> destination = _unit.Destination.GetAll().ToList();
             return View(destination);
         }
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
 
                 DestinationVM destinationVM = new()
@@ -38,17 +41,62 @@ namespace TravelWeb.Areas.Admin.Controllers
             
                 Destination = new Destination()
             };
-            return View(destinationVM);
+            if(id==null || id == 0)
+            {
+
+                return View(destinationVM);
+            }
+            else //update
+            {
+                destinationVM.Destination = _unit.Destination.Get(u => u.Id == id);
+                return View(destinationVM); 
+
+            }
         }
 
         [HttpPost]
-        public IActionResult Create(DestinationVM destinationVM)
+        public IActionResult Upsert(DestinationVM destinationVM, IFormFile? file)
         {
             
            if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); //random dodeli ime sa ekstenzijom
+                    string destinationPath = Path.Combine(wwwRootPath, @"images\destination");
+                
+                    if(!string.IsNullOrEmpty(destinationVM.Destination.ImageUrl))
+                    {
+                        //brise postojecu sliku
+                        var old = 
+                            Path.Combine(wwwRootPath, destinationVM.Destination.ImageUrl.TrimStart('\\'));
+                        
+                        if(System.IO.File.Exists(old))
+                        {
+                            System.IO.File.Delete(old);
+                        }
+                    
+                    }
 
-                _unit.Destination.Add(destinationVM.Destination);
+                    using (var fileStream = new FileStream(Path.Combine(destinationPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    destinationVM.Destination.ImageUrl = @"\images\destination\" + fileName;
+                }   
+                if(destinationVM.Destination.Id == 0)
+                {
+                    _unit.Destination.Add(destinationVM.Destination);
+
+
+                }
+                else
+                {
+                    _unit.Destination.Update(destinationVM.Destination);
+                    
+                }
+
                 _unit.Save();
 
                 return RedirectToAction("Index");
@@ -65,38 +113,6 @@ namespace TravelWeb.Areas.Admin.Controllers
                 return View(destinationVM);
             }
 
-        }
-
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-
-            Destination? destination = _unit.Destination.Get(u => u.Id == id);
-
-            if (destination == null)
-            {
-                return NotFound();
-            }
-            return View(destination);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Destination obj)
-        {
-            if (ModelState.IsValid)
-            {
-
-                _unit.Destination.Update(obj);
-                _unit.Save();
-
-                return RedirectToAction("Index");
-
-            }
-
-            return View();
         }
 
         public IActionResult Delete(int? id)

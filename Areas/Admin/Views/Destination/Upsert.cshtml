@@ -1,0 +1,103 @@
+﻿@model TravelWeb.Models.ViewModels.DestinationVM
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-gradient ml-0 py-3">
+
+    <form method="post" class="row" enctype="multipart/form-data">
+        <input asp-for="Destination.Id" hidden />
+        <input asp-for="Destination.ImageUrl" hidden />
+
+        <div class="row">
+            <div class="col-10  p-3 mt-1">
+
+                <div class="row">
+                    <h3 class="text-primary">@(Model.Destination.Id != 0 ? "Izmeni" : "Dodaj") putovanje</h3>
+                    <hr />
+                </div>
+
+                <div class="mb-3">
+                    <label class="p-1">Naziv putovanja</label>
+                    <input asp-for="Destination.Name" class="form-control" />
+                    <span asp-validation-for="Destination.Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="p-1">Opis putovanja</label>
+                    <input asp-for="Destination.Description" class="form-control" />
+                    <span asp-validation-for="Destination.Description" class="text-danger"></span>
+                </div>
+
+
+                <div class="mb-3">
+                    <label class="p-1">Slika</label>
+                    <input type="file" name="file" class="form-control" />
+                </div>
+
+
+
+                <div class="mb-3">
+                    <label class="p-1">Smestaj</label>
+                    <input asp-for="Destination.Hotel" class="form-control" />
+                    <span asp-validation-for="Destination.Hotel" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="p-1">Cena</label>
+                    <input asp-for="Destination.Price" class="form-control" />
+                    <span asp-validation-for="Destination.Price" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="p-1">Polazak</label>
+                    <input asp-for="Destination.Date1" class="form-control" />
+                    <span asp-validation-for="Destination.Date1" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="p-1">Povratak</label>
+                    <input asp-for="Destination.Date2" class="form-control" />
+                    <span asp-validation-for="Destination.Date2" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Destination.CategoryId" class="p-1">Kategorija putovanja</label>
+                    <select asp-for="Destination.CategoryId" asp-items="@Model.CategoryList" class="form-select">
+                        <option disabled selected>---Izaberi kategoriju---</option>
+                    </select>
+
+                    <span asp-validation-for="Destination.CategoryId" class="text-primary"></span>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-6">
+                        @if (Model.Destination.Id != 0)
+                        {
+                            <button type="submit" class="btn btn-primary form-control">Izmeni</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-primary form-control">Dodaj</button>
+                        }
+                    </div>
+                    <div class="col-6">
+                        <a asp-controller="Destination" asp-action="Index" class="btn btn-outline-secondary form-control">
+                            Nazad na listu
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-2 mx-auto">
+
+                <div class="card mt-4 " style="width: 100%;">
+                    <img src="@Model.Destination.ImageUrl">
+                </div>
+
+            </div>
+        </div>
+
+
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
