@@ -9,6 +9,8 @@
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.9-preview.2.23153.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
