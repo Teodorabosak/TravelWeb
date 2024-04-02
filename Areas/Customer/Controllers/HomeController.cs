@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using TravelWeb.Models;
 using TravelWeb.Repository.IRepository;

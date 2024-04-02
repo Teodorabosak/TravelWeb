@@ -1,17 +1,51 @@
-﻿<div class="row mt-4">
-    <h1 class="text-primary">
-        Gradovi Evrope 
-    </h1>
-    <p>
-        Uzmite pauzu od svakodnevnice i zaronite u čarobni svet evropskih gradova uz našu turističku agenciju. 
-        Prepustite se avanturi i istražite fascinantnu istoriju, bogatu kulturu i neponovljivu atmosferu nekih od najpoznatijih destinacija u Evropi. Sa našim pažljivo odabranim putovanjima, očekuju vas nezaboravna iskustva i trenuci koji će vas inspirisati i osvežiti. Doživite čaroliju Pariza, osetite duh Rima, prošetajte kroz
-        šarmantne ulice Amsterdama i još mnogo toga. Vaše putovanje počinje ovde!
+﻿
+<div id="carouselExampleCaptions" class="carousel slide" style="height: 450px; overflow: hidden;">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/images/category/3.jpg" class="d-block w-100" alt="...">
+            
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/category/1.jpg" class="d-block w-100" alt="...">
+            
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/category/6.jpg" class="d-block w-100" alt="...">
+           
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/category/4.jpg" class="d-block w-100" alt="...">
+            
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Back</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
 
-<div class="row row-cols-1 row-cols-md-3 g-4 pb-3" style=" margin-bottom: 20px;">
-   
+<h1 class="text-primary text-center">
+    Putovanja
+</h1>
+<p class=" text-center">
+    Zamislite sebe kako šetate kroz slikovite uličice starog grada u Parizu, osećajući miris sveže pečenih kroasana dok se spuštate ka obali Sene. Ili možda sanjarite o proživljavanju mističnih trenutaka ispod moćnih rimskih ruševina, gde prošlost i sadašnjost se ukrštaju na svakom koraku. U našem širokom spektru ponuda, svaka destinacija 
+    je priča za sebe, čekajući da je ispričate sa svakim korakom koji napravite.
+</p>
+<div class="row row-cols-1 row-cols-md-3 mt-4 g-4 pb-3" style=" margin-bottom: 20px;">
+  
     @foreach (var destination in Model)
     {
+
         <div class="col">
             <div class="card border-0 shadow">
                 <img src="@destination.ImageUrl" class="card-img-top rounded" style="height: 200px; object-fit: cover;" alt="@destination.Name">

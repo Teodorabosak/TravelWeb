@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TravelWeb.Models;
+﻿using TravelWeb.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TravelWeb.Data
 {
-    public class ApplicationDbContext : DbContext //nasledjuje iz DbContext klase, koju smo uveli putem nugget-a
+    public class ApplicationDbContext : IdentityDbContext //nasledjuje iz DbContext klase, koju smo uveli putem nugget-a
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
