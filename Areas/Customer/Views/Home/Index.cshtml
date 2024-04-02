@@ -1,17 +1,35 @@
-﻿@*  @model IEnumerable<Destination>
+﻿<div class="row mt-4">
+    <h1 class="text-primary">
+        Gradovi Evrope 
+    </h1>
+    <p>
+        Uzmite pauzu od svakodnevnice i zaronite u čarobni svet evropskih gradova uz našu turističku agenciju. 
+        Prepustite se avanturi i istražite fascinantnu istoriju, bogatu kulturu i neponovljivu atmosferu nekih od najpoznatijih destinacija u Evropi. Sa našim pažljivo odabranim putovanjima, očekuju vas nezaboravna iskustva i trenuci koji će vas inspirisati i osvežiti. Doživite čaroliju Pariza, osetite duh Rima, prošetajte kroz
+        šarmantne ulice Amsterdama i još mnogo toga. Vaše putovanje počinje ovde!
+</div>
 
-    @* <div class="row pb-3">
-    @foreach(var destination in Model)
+<div class="row row-cols-1 row-cols-md-3 g-4 pb-3" style=" margin-bottom: 20px;">
+   
+    @foreach (var destination in Model)
     {
-        <div class="col-lg-3 col-sm-6">
-            <div class="row p-2">
-                <div class="col-12 p-1">
-                    <div class="card border-0 p-3 shadow border-top border-5 rounded">
-                        <img
-
-                    </div>
+        <div class="col">
+            <div class="card border-0 shadow">
+                <img src="@destination.ImageUrl" class="card-img-top rounded" style="height: 200px; object-fit: cover;" alt="@destination.Name">
+                <div class="card-body">
+                    <h4 class="card-title text-center">@destination.Name</h4>
+                    <h6 class="card-title text-center"> Polazak @destination.Date1.ToShortDateString()</h6>
+                    <h5 class="card-title text-primary text-center"> Cena <b>@destination.Price</b> € </h5>
+                </div>
+                <div>
+                    <a asp-action="Details" 
+                    asp-route-id="@destination.Id"
+                    class="btn btn-primary bg-gradient border-0 form-control">
+                        Procitaj vise
+                    </a>
                 </div>
             </div>
         </div>
+        
     }
-</div>  *@
+
+</div>

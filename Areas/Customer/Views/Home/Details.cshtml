@@ -1,0 +1,30 @@
+﻿@model Destination
+
+<form method="post">
+    <div class="container">
+        <div class="border rounded p-4 mb-5 mt-2">
+            <h1 class="text-primary p-2 text-center">@Model.Name</h1>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="@Model.ImageUrl" class="img-fluid rounded" alt="@Model.Name">
+                </div>
+                <div class="col-md-6">
+                    <p><strong> Opis </strong> <br />
+                        @Model.Description</p>
+                    <p> <strong>Smestaj:</strong> @Model.Hotel</p>
+                    <p> <strong>Cena:</strong> @Model.Price €</p>
+                    <p><strong>Datum polaska:</strong> @Model.Date1.ToShortDateString()</p>
+                    <p><strong>Datum povratka:</strong> @Model.Date2.ToShortDateString()</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary form-control ">
+                    Nazad 
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+</form>

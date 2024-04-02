@@ -19,11 +19,17 @@
             <label class="p-1"> Redosled prikazivanja</label>
             <input asp-for="DisplayOrder" disabled class="form-control" />
         </div>
+            <div class="mb-3">
+                <label class="p-1"> Opis </label>
+                <input asp-for="Description" class="form-control" />
+            </div>
 
         <div class="row">
             <div class="col-6">
                 <button type="submit" class="btn btn-dark form-control"> Obrisi </button>
             </div>
+
+
 
             <div class="col-6">
                 <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary form-control ">

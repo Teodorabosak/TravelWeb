@@ -14,6 +14,7 @@ namespace TravelWeb.Models
         public int DisplayOrder { get; set; }
         
 
-        
+        public  string Description { get;set; }
+
     }
 }
