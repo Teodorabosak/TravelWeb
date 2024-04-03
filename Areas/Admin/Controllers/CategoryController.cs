@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TravelWeb.Data;
 using TravelWeb.Models;
 using TravelWeb.Repository;
 using TravelWeb.Repository.IRepository;
+using TravelWeb.Utility;
 
 namespace TravelWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_User_Admin)]
     public class CategoryController : Controller
     {
 
