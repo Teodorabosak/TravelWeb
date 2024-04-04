@@ -6,7 +6,7 @@ namespace TravelWeb.Repository.IRepository
     {
         //T - Category ili bilo koji drugi model nad kojim hocemo da vrsimo CRUD operacije
         IEnumerable<T> GetAll(string? includeProperties = null);
-        T Get(Expression<Func<T,bool>> filter, string? includeProperties = null);
+        T Get(Expression<Func<T,bool>> filter, string? includeProperties = null, bool tracked = false);
 
         void Add(T entity);
         void Delete(T entity);

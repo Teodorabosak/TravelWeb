@@ -5,6 +5,7 @@
         ICategoryRepository Category { get; }
         IDestinationRepository Destination{ get; }
         IBookingRepository Booking { get; }
+        IApplicationUserRepository ApplicationUser { get; }
 
         void Save();
     }

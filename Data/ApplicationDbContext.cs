@@ -8,7 +8,8 @@ namespace TravelWeb.Data
 {
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>//nasledjuje iz DbContext klase, koju smo uveli putem nugget-a
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
 
 

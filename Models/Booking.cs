@@ -11,6 +11,8 @@ namespace TravelWeb.Models
         [ForeignKey("DestinationId")]
         [ValidateNever]
         public Destination Destination { get; set; }
+
+        public int NumberOfPeople { get; set; }
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]

@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Security.Claims;
+using TravelWeb.Migrations;
 using TravelWeb.Models;
+using TravelWeb.Models.ViewModels;
 using TravelWeb.Repository.IRepository;
 
 namespace TravelWeb.Areas.Customer.Controllers
@@ -28,9 +32,45 @@ namespace TravelWeb.Areas.Customer.Controllers
 
         public IActionResult Details(int id)
         {
-            Destination destination = _unit.Destination.Get(u => u.Id == id, includeProperties: "Category");
-            return View(destination);
+            Booking booking = new()
+            {
 
+                Destination = _unit.Destination.Get(u => u.Id == id, includeProperties: "Category"),
+                NumberOfPeople = 1,
+                DestinationId = id
+
+            };
+
+            return View(booking);
+        }
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(Booking booking)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            booking.ApplicationUserId = userId;
+
+            Booking booDb = _unit.Booking.Get(u => u.ApplicationUserId == userId &&
+            u.DestinationId == booking.DestinationId);
+            
+            if(booDb != null)
+            {
+                booDb.NumberOfPeople += booking.NumberOfPeople;
+                //_unit.Booking.Update(booDb);
+
+            } else
+            {
+
+                _unit.Booking.Add(booking);
+            }
+            TempData["success"] = "Uspesno ste rezervisali putovanje";
+
+            _unit.Save();
+
+            
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

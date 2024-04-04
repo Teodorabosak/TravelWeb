@@ -13,6 +13,7 @@ namespace TravelWeb.Repository
             Category = new CategoryRepository(_context);
             Destination = new DestinationRepository(_context);
             Booking = new BookingRepository(_context);
+            ApplicationUser = new ApplicationUserRepository(_context);
         }
         public ICategoryRepository Category {get; private set;}
 
@@ -20,6 +21,8 @@ namespace TravelWeb.Repository
 
 
         public IBookingRepository Booking { get; private set; }
+
+        public IApplicationUserRepository ApplicationUser { get; private set; }
 
         public void Save()
         {

@@ -1,30 +1,53 @@
-﻿@model Destination
+﻿@model Booking
 
 <form method="post">
+    <input hidden asp-for="DestinationId"/>
     <div class="container">
-        <div class="border rounded p-4 mb-5 mt-2">
-            <h1 class="text-primary p-2 text-center">@Model.Name</h1>
+        <div class="border rounded p-4 mb-3 mt-2">
+            <h1 class="text-primary p-2 text-center">@Model.Destination.Name</h1>
 
             <div class="row">
                 <div class="col-md-6">
-                    <img src="@Model.ImageUrl" class="img-fluid rounded" alt="@Model.Name">
+                    <img src="@Model.Destination.ImageUrl" class="img-fluid rounded" alt="@Model.Destination.Name">
                 </div>
                 <div class="col-md-6">
                     <p><strong> Opis </strong> <br />
-                        @Model.Description</p>
-                    <p> <strong>Smestaj:</strong> @Model.Hotel</p>
-                    <p> <strong>Cena:</strong> @Model.Price €</p>
-                    <p><strong>Datum polaska:</strong> @Model.Date1.ToShortDateString()</p>
-                    <p><strong>Datum povratka:</strong> @Model.Date2.ToShortDateString()</p>
+                        @Model.Destination.Description
+                    </p>
+                    <p> <strong>Smestaj:</strong> @Model.Destination.Hotel</p>
+                    <p> <strong>Cena:</strong> @Model.Destination.Price €</p>
+                    <p><strong>Datum polaska:</strong> @Model.Destination.Date1.ToShortDateString()</p>
+                    <p><strong>Datum povratka:</strong> @Model.Destination.Date2.ToShortDateString()</p>
+
+                    <div class="input-group mb-4">
+                        <span class="input-group-text bg-primary text-white border-1 fw-semibold"
+                              id="inputGroup-sizing-default">
+                            Broj ljudi
+                        </span>
+                        <input asp-for="NumberOfPeople" type="number" value="1" class="form-control text-end"
+                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                    </div>
+                    
                 </div>
+                <div class="row">
+                    <div class="col-12 col-6 pb-0">
+                        <buton type="submit" class="btn btn-primary bg-gradient w-100 py-2 text-uppercase fw-semibold">
+                            Rezervisi putovanje
+                        </buton>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-6">
+
             </div>
             <div class="col-6">
                 <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary form-control ">
-                    Nazad 
+                    Nazad
                 </a>
             </div>
         </div>
-
-
     </div>
 </form>

@@ -14,7 +14,7 @@ namespace TravelWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
 
-    [Authorize(Roles = SD.Role_User_Admin)]
+    [Authorize(Roles = SD.Role_Admin)]
     public class DestinationController : Controller
     {
 
