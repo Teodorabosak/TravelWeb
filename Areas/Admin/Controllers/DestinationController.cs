@@ -13,8 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace TravelWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
-    [Authorize(Roles = SD.Role_Admin)]
+    [Authorize(Roles ="Admin")]
     public class DestinationController : Controller
     {
 

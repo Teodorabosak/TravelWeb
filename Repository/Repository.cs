@@ -50,14 +50,23 @@ namespace TravelWeb.Repository
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string includeProperties = "")
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter,string includeProperties = "")
         {
+
             IQueryable<T> query = dbSet;
-            foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            if(filter != null)
             {
-                query = query.Include(includeProp);
+                query = query.Where(filter);
+            }
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
             }
             return query.ToList();
         }
+
     }
 }

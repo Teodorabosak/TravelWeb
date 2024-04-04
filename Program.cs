@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using TravelWeb.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container, nasa aplikacija koristi kontrolere
@@ -17,6 +18,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options=>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnit,Unit>();
+builder.Services.ConfigureApplicationCookie(options => {
+options.LoginPath = $"/Identity/Account/Login";
+options.LogoutPath = $"/Identity/Account/Logout";
+options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 //builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
@@ -35,7 +40,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+
+app.UseAuthentication(); //da li je user name i pass dobar
+app.UseAuthorization(); //u odnosu na autorizaciju nije isti pristup za sve korsinike
 app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",

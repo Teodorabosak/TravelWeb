@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,26 +25,32 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link"asp-area="Customer" asp-controller="Home" asp-action="Index">Pocetna strana</a>
+                            <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Pocetna strana</a>
                         </li>
-                        @if (User.IsInRole(SD.Role_Admin))
-                        {   
+                        @if (User.IsInRole(SD.Role_User_Admin))
+
+                        {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Meni
                                 </a>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu text-bg-secondary">
                                     <li class="nav-item">
                                         <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Kategorije</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" asp-area="Admin" asp-controller="Destination" asp-action="Index">Putovanja</a>
                                     </li>
+                                    <li><hr class="dropdown-divider"></li>
                                 </ul>
-                            
                             </li>
-                           
-                        }
+                         } 
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Customer" asp-controller="Booking" asp-action="Index">
+                               <i class="bi bi-cart"></i> &nbsp;(0)
+                                </a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -48,14 +58,14 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3"> 
+        <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer bg-primary text-muted ">
-        <div class="container text-center" >
-            <i class="bi bi-heart text-white"></i>  
+        <div class="container text-center">
+            <i class="bi bi-heart text-white"></i>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

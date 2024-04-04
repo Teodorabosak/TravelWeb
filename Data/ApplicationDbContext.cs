@@ -28,6 +28,7 @@ namespace TravelWeb.Data
                 new Category { Id = 3, Name = "Putovanja za mlade", DisplayOrder = 3, Description = "" },
                  new Category { Id = 4, Name = "Egzotična putovanja", DisplayOrder = 4 , Description = "" }
                 );
+
             modelBuilder.Entity<Destination>().HasData(
                new Destination
                {
