@@ -27,14 +27,14 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Pocetna strana</a>
                         </li>
-                        @if (User.IsInRole(SD.Role_User_Admin))
+                        
 
-                        {
+                        
                             <li class="nav-item dropdown">
-                                <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link text-white opacity-75 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Meni
                                 </a>
-                                <ul class="dropdown-menu text-bg-secondary">
+                                <ul class="dropdown-menu text-bg-primary">
                                     <li class="nav-item">
                                         <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Kategorije</a>
                                     </li>
@@ -44,7 +44,7 @@
                                     <li><hr class="dropdown-divider"></li>
                                 </ul>
                             </li>
-                         } 
+                         
 
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Booking" asp-action="Index">

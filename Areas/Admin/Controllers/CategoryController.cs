@@ -9,7 +9,7 @@ using TravelWeb.Utility;
 namespace TravelWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
 
