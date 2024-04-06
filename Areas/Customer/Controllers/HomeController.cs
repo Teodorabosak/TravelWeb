@@ -7,6 +7,7 @@ using TravelWeb.Migrations;
 using TravelWeb.Models;
 using TravelWeb.Models.ViewModels;
 using TravelWeb.Repository.IRepository;
+using TravelWeb.Utility;
 
 namespace TravelWeb.Areas.Customer.Controllers
 {
@@ -36,9 +37,10 @@ namespace TravelWeb.Areas.Customer.Controllers
             Booking booking = new()
             {
 
-                Destination = _unit.Destination.Get(u => u.Id == id, includeProperties: "Category"),
+                
                 NumberOfPeople = 1,
-                DestinationId = id
+                DestinationId = id,
+                Destination = _unit.Destination.GetFirstOrDefault(u => u.Id == id, includeProperties: "Category"),
 
             };
 
@@ -46,25 +48,30 @@ namespace TravelWeb.Areas.Customer.Controllers
         }
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
+
         public IActionResult Details(Booking booking)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            booking.ApplicationUserId = userId;
+            booking.ApplicationUserId = userId.Value;
 
-            Booking booDb = _unit.Booking.Get(u => u.ApplicationUserId == userId &&
+            Booking booDb = _unit.Booking.GetFirstOrDefault(u => u.ApplicationUserId == userId.Value &&
             u.DestinationId == booking.DestinationId);
             
-            if(booDb != null)
+            if(booDb == null)
             {
-                booDb.NumberOfPeople += booking.NumberOfPeople;
-                //_unit.Booking.Update(booDb);
+                _unit.Booking.Add(booking);
+                _unit.Save();
+                HttpContext.Session.SetInt32(SD.SessionBooking,
+                    _unit.Booking.GetAll(u => u.ApplicationUserId == userId.Value).ToList().Count);
 
             } else
             {
 
-                _unit.Booking.Add(booking);
+                _unit.Booking.IncrementCount(booDb, booking.NumberOfPeople);
+                _unit.Save();
             }
             TempData["success"] = "Uspesno ste rezervisali putovanje";
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NuGet.ContentModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,15 @@ namespace TravelWeb.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
         internal DbSet<T> dbSet;
 
-        public Repository(ApplicationDbContext context)
+        public Repository(ApplicationDbContext db)
         {
-            _context = context;
-            dbSet = _context.Set<T>();
+            _db = db;
+            //_db.ShoppingCarts.Include(u => u.Product).Include(u=>u.CoverType);
+            this.dbSet = _db.Set<T>();
         }
-
         public void Add(T entity)
         {
             dbSet.Add(entity);
@@ -29,36 +30,22 @@ namespace TravelWeb.Repository
             dbSet.Remove(entity);
         }
 
+
         public void DeleteRange(IEnumerable<T> entity)
         {
             dbSet.RemoveRange(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string includeProperties = "", bool tracked = false)
+
+        //includeProp - "Category,CoverType"
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            if (!tracked)
-            {
-                query = query.AsNoTracking();
-            }
-            query = query.Where(filter);
-            foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProp);
-            }
-
-            return query.FirstOrDefault();
-        }
-
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter,string includeProperties = "")
-        {
-
-            IQueryable<T> query = dbSet;
-            if(filter != null)
+            if (filter != null)
             {
                 query = query.Where(filter);
             }
-            if (!string.IsNullOrEmpty(includeProperties))
+            if (includeProperties != null)
             {
                 foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
@@ -68,5 +55,38 @@ namespace TravelWeb.Repository
             return query.ToList();
         }
 
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = true)
+        {
+            if (tracked)
+            {
+                IQueryable<T> query = dbSet;
+
+                query = query.Where(filter);
+                if (includeProperties != null)
+                {
+                    foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        query = query.Include(includeProp);
+                    }
+                }
+                return query.FirstOrDefault();
+            }
+            else
+            {
+                IQueryable<T> query = dbSet.AsNoTracking();
+
+                query = query.Where(filter);
+                if (includeProperties != null)
+                {
+                    foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        query = query.Include(includeProp);
+                    }
+                }
+                return query.FirstOrDefault();
+            }
+
+        }
     }
-}
+ }
+
