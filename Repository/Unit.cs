@@ -14,6 +14,9 @@ namespace TravelWeb.Repository
             Destination = new DestinationRepository(_context);
             Booking = new BookingRepository(_context);
             ApplicationUser = new ApplicationUserRepository(_context);
+            OrderDetail = new OrderDetailRepository(_context);
+            OrderHeader = new OrderHeaderRepository(_context);
+
         }
         public ICategoryRepository Category {get; private set;}
 
@@ -23,10 +26,13 @@ namespace TravelWeb.Repository
         public IBookingRepository Booking { get; private set; }
 
         public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IOrderHeaderRepository OrderHeader { get; private set; }
+        public IOrderDetailRepository OrderDetail { get; private set; }
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
+
+            public void Save()
+            {
+                _context.SaveChanges();
+            }
     }
 }
