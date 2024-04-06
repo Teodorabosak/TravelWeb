@@ -6,8 +6,6 @@
         IDestinationRepository Destination{ get; }
         IBookingRepository Booking { get; }
         IApplicationUserRepository ApplicationUser { get; }
-        IOrderDetailRepository OrderDetail { get; } 
-        IOrderHeaderRepository OrderHeader { get; }
 
         void Save();
     }

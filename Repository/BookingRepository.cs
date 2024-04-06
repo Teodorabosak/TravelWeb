@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using TravelWeb.Data;
 using TravelWeb.Models;
-using TravelWeb.Models.ViewModels;
 using TravelWeb.Repository.IRepository;
 
 namespace TravelWeb.Repository
@@ -17,17 +16,6 @@ namespace TravelWeb.Repository
         public void Update(Booking booking)
         {
            _context.Bookings.Update(booking);
-        }
-        public int DecrementCount(Booking booking, int count)
-        {
-            booking.NumberOfPeople -= count;
-            return booking.NumberOfPeople;
-        }
-
-        public int IncrementCount(Booking booking, int count)
-        {
-            booking.NumberOfPeople += count;
-            return booking.NumberOfPeople;
         }
     }
 }

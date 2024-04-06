@@ -52,7 +52,7 @@ namespace TravelWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Category? category = _unit.Category.GetFirstOrDefault(u=>u.Id==id);
+            Category? category = _unit.Category.Get(u=>u.Id==id);
 
             if (category == null)
             {
@@ -84,7 +84,7 @@ namespace TravelWeb.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Category? category = _unit.Category.GetFirstOrDefault(u => u.Id == id);
+            Category? category = _unit.Category.Get(u => u.Id == id);
 
             if (category == null)
             {
@@ -97,7 +97,7 @@ namespace TravelWeb.Areas.Admin.Controllers
 
         public IActionResult DeletePOST(int? id)
         {
-            Category obj = _unit.Category.GetFirstOrDefault(u => u.Id == id);
+            Category obj = _unit.Category.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
