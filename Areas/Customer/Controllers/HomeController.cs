@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Security.Claims;
-using TravelWeb.Migrations;
 using TravelWeb.Models;
 using TravelWeb.Models.ViewModels;
 using TravelWeb.Repository.IRepository;
@@ -32,15 +31,15 @@ namespace TravelWeb.Areas.Customer.Controllers
             //vraca view Index-na osn naziva metode, ako nismo naveli u zagradi
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int destinationId)
         {
             Booking booking = new()
             {
 
                 
                 NumberOfPeople = 1,
-                DestinationId = id,
-                Destination = _unit.Destination.GetFirstOrDefault(u => u.Id == id, includeProperties: "Category"),
+                DestinationId = destinationId,
+                Destination = _unit.Destination.GetFirstOrDefault(u => u.Id == destinationId, includeProperties: "Category"),
 
             };
 
@@ -59,22 +58,19 @@ namespace TravelWeb.Areas.Customer.Controllers
 
             Booking booDb = _unit.Booking.GetFirstOrDefault(u => u.ApplicationUserId == userId.Value &&
             u.DestinationId == booking.DestinationId);
-            
-            if(booDb == null)
+
+            if (booDb == null)
             {
                 _unit.Booking.Add(booking);
-                _unit.Save();
-                HttpContext.Session.SetInt32(SD.SessionBooking,
-                    _unit.Booking.GetAll(u => u.ApplicationUserId == userId.Value).ToList().Count);
 
-            } else
-            {
+            }
+            else
+            {   //vec postoji 
 
                 _unit.Booking.IncrementCount(booDb, booking.NumberOfPeople);
-                _unit.Save();
+                //booDb.NumberOfPeople += booking.NumberOfPeople;
+                //_unit.Booking.Update(booking);
             }
-            TempData["success"] = "Uspesno ste rezervisali putovanje";
-
             _unit.Save();
 
             

@@ -253,7 +253,7 @@ namespace TravelWeb.Migrations
 
                     b.HasIndex("DestinationId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("TravelWeb.Models.Category", b =>
@@ -278,7 +278,7 @@ namespace TravelWeb.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -351,7 +351,7 @@ namespace TravelWeb.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Destinations");
+                    b.ToTable("Destinations", (string)null);
 
                     b.HasData(
                         new
@@ -394,7 +394,7 @@ namespace TravelWeb.Migrations
 
                     b.HasIndex("OrderHeaderId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("TravelWeb.Models.OrderHeader", b =>
@@ -443,7 +443,7 @@ namespace TravelWeb.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("OrderHeaders");
+                    b.ToTable("OrderHeaders", (string)null);
                 });
 
             modelBuilder.Entity("TravelWeb.Models.ApplicationUser", b =>
