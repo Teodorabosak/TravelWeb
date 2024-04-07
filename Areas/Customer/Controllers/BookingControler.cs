@@ -149,7 +149,7 @@ namespace TravelWebWeb.Areas.Customer.Controllers
 				{
 					PriceData = new SessionLineItemPriceDataOptions
 					{
-						UnitAmount = (long)(item.Price * item.NumberOfPeople)*100,
+						UnitAmount = (long)(item.Price)*100,
 						Currency = "EUR",
 						ProductData = new SessionLineItemPriceDataProductDataOptions
 						{
@@ -167,8 +167,8 @@ namespace TravelWebWeb.Areas.Customer.Controllers
 			var service = new SessionService();
 			Session session = service.Create(options);
 
-			//_unit.OrderHeader.UpdateStripePaymentID(BookingVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
-			//_unit.Save();
+			_unit.OrderHeader.UpdateStripePaymentID(BookingVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+			_unit.Save();
 			Response.Headers.Add("Location", session.Url);
 
 			return new StatusCodeResult(303);
@@ -179,9 +179,19 @@ namespace TravelWebWeb.Areas.Customer.Controllers
 		{
 			OrderHeader orderHeader = _unit.OrderHeader.GetFirstOrDefault(u => u.Id == id);
 
-			return View("Index");
-
+			var service = new SessionService();
+			Session session = service.Get(orderHeader.SessionId);
 			//check the stripe status
+			if (session.PaymentStatus.ToLower() == "paid")
+			{
+				_unit.OrderHeader.UpdateStatus(id, SD.PaymentStatusApproved);
+				_unit.Save();
+			}
+			List<Booking> bookings = _unit.Booking.GetAll(u => u.ApplicationUserId ==
+			orderHeader.ApplicationUserId).ToList();
+			_unit.Booking.DeleteRange(bookings);
+			_unit.Save();
+			return View(id);
 		}
 
 		public IActionResult Plus(int bookingId)
