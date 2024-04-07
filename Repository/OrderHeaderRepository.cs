@@ -17,5 +17,21 @@ namespace TravelWeb.Repository
         {
            _context.OrderHeaders.Update(obj);
         }
-    }
+		public void UpdateStatus(int id, string? paymentStatus = null)
+		{
+			var orderFromDb = _context.OrderHeaders.FirstOrDefault(u => u.Id == id);
+			if (orderFromDb != null)
+			{
+				orderFromDb.PaymentStatus = paymentStatus;
+				//_context.SaveChanges();
+			}
+		}
+		public void UpdateStripePaymentID(int id, string sessionId, string paymentItentId)
+		{
+			var orderFromDb = _context.OrderHeaders.FirstOrDefault(u => u.Id == id);
+
+			orderFromDb.SessionId = sessionId;
+			orderFromDb.PaymentIntentId = paymentItentId;
+		}
+	}
 }

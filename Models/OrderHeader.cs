@@ -16,19 +16,19 @@ namespace TravelWeb.Models
 
         public double OrderTotal {  get; set; }
 
+        public string? SessionId { get; set; }
 
-        [Required]
-        public string PaymentStatus {  get; set; }
-        [Required]
-        public string PaymentIntentId { get; set; }
+        
+        public string? PaymentStatus {  get; set; }
+        
+        public string? PaymentIntentId { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
         [Required]
         public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        [Required]
-        public string PassportId { get; set;}
+        
+
+        
 
 
     }
