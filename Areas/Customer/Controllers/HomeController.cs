@@ -30,6 +30,10 @@ namespace TravelWeb.Areas.Customer.Controllers
             return View(destinations);
             //vraca view Index-na osn naziva metode, ako nismo naveli u zagradi
         }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
 
         public IActionResult Details(int destinationId)
         {
@@ -72,7 +76,6 @@ namespace TravelWeb.Areas.Customer.Controllers
                 //_unit.Booking.Update(booking);
             }
             _unit.Save();
-
             
             return RedirectToAction(nameof(Index));
         }

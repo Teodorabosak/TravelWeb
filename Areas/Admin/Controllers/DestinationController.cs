@@ -13,7 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace TravelWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class DestinationController : Controller
     {
 
@@ -33,19 +33,19 @@ namespace TravelWeb.Areas.Admin.Controllers
         public IActionResult Upsert(int? id)
         {
 
-                DestinationVM destinationVM = new()
+            DestinationVM destinationVM = new()
             {
-                CategoryList=_unit.Category
-               .GetAll().Select(u => new SelectListItem
-               {
-                   Text = u.Name,
-                   Value = u.Id.ToString()
+                CategoryList = _unit.Category
+           .GetAll().Select(u => new SelectListItem
+           {
+               Text = u.Name,
+               Value = u.Id.ToString()
 
-               }),
-            
+           }),
+
                 Destination = new Destination()
             };
-            if(id==null || id == 0)
+            if (id == null || id == 0)
             {
 
                 return View(destinationVM);
@@ -53,7 +53,7 @@ namespace TravelWeb.Areas.Admin.Controllers
             else //update
             {
                 destinationVM.Destination = _unit.Destination.GetFirstOrDefault(u => u.Id == id);
-                return View(destinationVM); 
+                return View(destinationVM);
 
             }
         }
@@ -61,35 +61,33 @@ namespace TravelWeb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Upsert(DestinationVM destinationVM, IFormFile? file)
         {
-            
-           if (ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); //random dodeli ime sa ekstenzijom
-                    string destinationPath = Path.Combine(wwwRootPath, @"images\destination");
-                
-                    if(!string.IsNullOrEmpty(destinationVM.Destination.ImageUrl))
-                    {
-                        //brise postojecu sliku
-                        var old = 
-                            Path.Combine(wwwRootPath, destinationVM.Destination.ImageUrl.TrimStart('\\'));
-                        
-                        if(System.IO.File.Exists(old))
-                        {
-                            System.IO.File.Delete(old);
-                        }
-                    
-                    }
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwRootPath, @"images\destination");
+                    var extension = Path.GetExtension(file.FileName);
 
-                    using (var fileStream = new FileStream(Path.Combine(destinationPath, fileName), FileMode.Create))
+                    if (destinationVM.Destination.ImageUrl != null)
                     {
-                        file.CopyTo(fileStream);
+                        var oldImagePath = Path.Combine(wwwRootPath, destinationVM.Destination.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
                     }
-                    destinationVM.Destination.ImageUrl = @"\images\destination\" + fileName;
-                }   
-                if(destinationVM.Destination.Id == 0)
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+                    destinationVM.Destination.ImageUrl = @"\images\destination\" + fileName + extension;
+
+                }
+
+                if (destinationVM.Destination.Id == 0)
                 {
                     _unit.Destination.Add(destinationVM.Destination);
 
@@ -98,26 +96,18 @@ namespace TravelWeb.Areas.Admin.Controllers
                 else
                 {
                     _unit.Destination.Update(destinationVM.Destination);
-                    
+
                 }
 
                 _unit.Save();
 
                 return RedirectToAction("Index");
 
-            } else
-            {
-                destinationVM.CategoryList = _unit.Category.GetAll().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                   Value = u.Id.ToString()
-
-                });
-
-                return View(destinationVM);
             }
-
+            return View(destinationVM);
         }
+
+
 
         public IActionResult Delete(int? id)
         {
@@ -149,6 +139,12 @@ namespace TravelWeb.Areas.Admin.Controllers
             return RedirectToAction("Index");
 
         }
+        
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var destinationList = _unit.Destination.GetAll(includeProperties: "Category");
+            return Json(new { data = destinationList });
+        }
     }
 }
-

@@ -22,8 +22,8 @@ namespace TravelWeb.Models
         public string? PaymentStatus {  get; set; }
         
         public string? PaymentIntentId { get; set; }
-        [Required]
-        public string PhoneNumber { get; set; }
+        
+        public string? PhoneNumber { get; set; }
         [Required]
         public string FirstName { get; set; }
         

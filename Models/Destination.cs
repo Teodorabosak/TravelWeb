@@ -39,7 +39,7 @@ namespace TravelWeb.Models
         public Category Category { get; set; }
         [ValidateNever]
         [Display(Name = "Slika")]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
 
 
