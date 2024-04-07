@@ -22,68 +22,50 @@
 				<div class="container rounded p-2">
 					<div class="row">
 						<div class="col-12 col-lg-6 pb-4">
-							<div class="row">
-								<h4 class="d-flex justify-content-between align-items-center mb-3">
-									<span class="text-primary">Podaci o putnicima:</span>
-								</h4>
-							</div>
-							<div class="row my-1">
-								<div class="col-3">
-									<label>Ime</label>
-								</div>
-								<div class="col-9">
-									<input asp-for="OrderHeader.FirstName" class="form-control" />
-									<span asp-validation-for="OrderHeader.FirstName" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row my-1">
-								<div class="col-3">
-									<label>Prezime</label>
-								</div>
-								<div class="col-9">
-									<input asp-for="OrderHeader.LastName" class="form-control" />
-									<span asp-validation-for="OrderHeader.LastName" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row my-1">
-								<div class="col-3">
-									<label>Broj telefona</label>
-								</div>
-								<div class="col-9">
-									<input asp-for="OrderHeader.PhoneNumber" class="form-control" />
-									<span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
-								</div>
-							</div>
-							<div class="row my-1">
-								<div class="col-3">
-									<label>Broj pasosa</label>
-								</div>
-								<div class="col-9">
-									<input asp-for="OrderHeader.PassportId" class="form-control" />
-									<span asp-validation-for="OrderHeader.PassportId" class="text-danger"></span>
-								</div>
-							</div>
+							
 							
 						<div class="col-12 col-lg-5 offset-lg-1">
 							<h4 class="d-flex justify-content-between align-items-center mb-3">
-								<span class="text-info">Order Summary:</span>
+								<span class="text-primary">Rezervacija:</span>
 							</h4>
-							@* <ul class="list-group mb-3">
+								<div class="row my-1">
+										<div class="col-3">
+                
+										<label>Ime kupca</label>
+										</div>
+									<div class="col-9">
+										<input asp-for="OrderHeader.FirstName" class="form-control" />
+										<span asp-validation-for="OrderHeader.FirstName" class="text-danger"></span>
+									</div>
+								</div>
+						</div>
+						<div class="row my-1">
+							<div class="col-3">
+								<label>Broj telefona</label>
+							</div>
+							<div class="col-9">
+								<input asp-for="OrderHeader.PhoneNumber" class="form-control" />
+								<span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
+							</div>
+						</div>
+
+							<ul class="list-group mb-3">
 								@foreach(var details in Model.BookingList){
 								<li class="list-group-item d-flex justify-content-between">
 									<div>
-											<h6 class="my-0">@details.Product.Title</h6>
-											<small class="text-muted">Quantity: @details.Count</small>
+											<h6 class="my-0">@details.Destination.Name</h6>
+											<small class="text-muted">Broj osoba: @details.NumberOfPeople
+											</small>
 									</div>
-									<span class="text-muted">@((details.Price*details.Count).ToString("c")) </span>
+									<span class="text-muted">@((details.Destination.Price*details.NumberOfPeople)) (EUR) </span>
 								</li>
 								}
 
 								<li class="list-group-item d-flex justify-content-between bg-light">
-									<small class="text-info">Total (USD)</small>
-									<strong class="text-info">@Model.OrderHeader.OrderTotal.ToString("c")</strong>
+									<small class="text-info">Ukupno (EUR)</small>
+									<strong class="text-info">@Model.OrderHeader.OrderTotal.ToString() (EUR)</strong>
 								</li>
-							</ul> *@
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -92,7 +74,7 @@
 				<div class="row">
 					
 					<div class="col-12 col-md-4">
-						<button type="submit" value="Place Order" class="btn btn-primary form-control">Place Order</button>
+						<button type="submit" value="Place Order" class="btn btn-primary form-control">Idi na placanje</button>
 					</div>
 				</div>
 			</div>

@@ -90,14 +90,20 @@ namespace TravelWebWeb.Areas.Customer.Controllers
         public IActionResult Summary()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             BookingVM = new()
             {
-                BookingList = _unit.Booking.GetAll(u => u.ApplicationUserId == userId,
+                BookingList = _unit.Booking.GetAll(u => u.ApplicationUserId == userId.Value,
                 includeProperties: "Destination"),
+                OrderHeader = new()
 
             };
+            BookingVM.OrderHeader.ApplicationName = _unit.ApplicationUser.GetFirstOrDefault(
+                u => u.Id == userId.Value);
+
+            BookingVM.OrderHeader.FirstName = BookingVM.OrderHeader.ApplicationName.Name;
+            BookingVM.OrderHeader.PhoneNumber = BookingVM.OrderHeader.ApplicationName.PhoneNumber;
 
             foreach (var booking in BookingVM.BookingList)
             {
